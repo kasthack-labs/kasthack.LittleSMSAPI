@@ -61,14 +61,13 @@ namespace kasthack.Tools.LittleSMS {
         /// <param name="apikey">pass</param>
         /// <returns></returns>
         public bool Login( String login, String apikey ) {
-            if ( !RequestString(
+            if ( JObject.Parse(  RequestString(
                     string.Format(
                         @"{0}api/user/balance?user={1}&apikey={2}",
                         LittleSMSRoot,
                         login,
                         apikey)
-                ).
-                Contains("\":\"success") ) return false;
+                ))["status"].Value<string>()!="success") return false;
             this._loginVar = login;
             this._passVar = apikey;
             return true;
