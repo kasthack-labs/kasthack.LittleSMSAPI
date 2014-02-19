@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net;
 using Newtonsoft.Json.Linq;
 
@@ -28,19 +27,19 @@ namespace kasthack.Tools.LittleSMS {
 
 
         static readonly Dictionary<string, SMSStatus> _statuses = new Dictionary<string, SMSStatus>
-		    #region Statuses
-				{
-					{"enqueued", SMSStatus.Enqueued},
-					{"enroute",SMSStatus.Enroute},
-					{"accepted",SMSStatus.Accepted},
-					{"delivered", SMSStatus.Delivered},
-					{"expired",SMSStatus.Expired},
-					{"deleted",SMSStatus.Deleted},
-					{"undeliverable",SMSStatus.Undeliverable},
-					{"rejected",SMSStatus.Rejected},
-					{"unknown",SMSStatus.Unknown},
-				};
-            #endregion
+        #region Statuses
+        {
+            {"enqueued", SMSStatus.Enqueued},
+            {"enroute",SMSStatus.Enroute},
+            {"accepted",SMSStatus.Accepted},
+            {"delivered", SMSStatus.Delivered},
+            {"expired",SMSStatus.Expired},
+            {"deleted",SMSStatus.Deleted},
+            {"undeliverable",SMSStatus.Undeliverable},
+            {"rejected",SMSStatus.Rejected},
+            {"unknown",SMSStatus.Unknown},
+        };
+        #endregion
         /// <summary>
         /// Test connection
         /// </summary>
@@ -131,7 +130,7 @@ namespace kasthack.Tools.LittleSMS {
             );
             var json = JObject.Parse( s );
             return json[ "status" ].Value<string>() == "success" ?
-                json[ "messages_id" ].Values<int>().ToArray().First() :
+                json[ "messages_id" ].First.First.Value<int>() :
                 0;
         }
         private static string RequestString( string url ) {
